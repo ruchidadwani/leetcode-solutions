@@ -1,71 +1,71 @@
+import java.util.*;
+
 class Solution {
 
     public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
 
+        // reversed word -> index
         Map<String, Integer> map = new HashMap<>();
 
-        // word -> index
-        for (int i = 0; i < words.length; i++) {
+        int n = words.length;
+
+        for (int i = 0; i < n; i++) {
             map.put(words[i], i);
         }
 
-        List<List<Integer>> ans = new ArrayList<>();
-
-        for (int i = 0; i < words.length; i++) {
-
+        for (int i = 0; i < n; i++) {
             String word = words[i];
-            int n = word.length();
+            int len = word.length();
 
-            // try every split
-            for (int j = 0; j <= n; j++) {
+            // split word into prefix + suffix
+            for (int cut = 0; cut <= len; cut++) {
 
-                String left = word.substring(0, j);
-                String right = word.substring(j);
+                String left = word.substring(0, cut);
+                String right = word.substring(cut);
 
                 // Case 1:
-                // reverse(right) + word
+                // left is palindrome
+                // find reverse(right) + word
                 if (isPalindrome(left, 0, left.length() - 1)) {
 
-                    String revRight =
-                        new StringBuilder(right).reverse().toString();
+                    String revRight = new StringBuilder(right).reverse().toString();
 
                     Integer idx = map.get(revRight);
 
                     if (idx != null && idx != i) {
-                        ans.add(Arrays.asList(idx, i));
+                        res.add(Arrays.asList(idx, i));
                     }
                 }
 
                 // Case 2:
-                // word + reverse(left)
+                // right is palindrome
+                // find word + reverse(left)
                 //
-                // j != n avoids duplicates
-                if (j != n &&
+                // cut != len prevents duplicates
+                if (cut != len &&
                     isPalindrome(right, 0, right.length() - 1)) {
 
-                    String revLeft =
-                        new StringBuilder(left).reverse().toString();
+                    String revLeft = new StringBuilder(left).reverse().toString();
 
                     Integer idx = map.get(revLeft);
 
                     if (idx != null && idx != i) {
-                        ans.add(Arrays.asList(i, idx));
+                        res.add(Arrays.asList(i, idx));
                     }
                 }
             }
         }
 
-        return ans;
+        return res;
     }
 
     private boolean isPalindrome(String s, int l, int r) {
-
         while (l < r) {
             if (s.charAt(l++) != s.charAt(r--)) {
                 return false;
             }
         }
-
         return true;
     }
 }
