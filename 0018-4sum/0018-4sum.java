@@ -1,3 +1,4 @@
+//Optimal   TC-> O(n^3) SC->O(no. of quads) (no space to solve the answer just for returning)
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
