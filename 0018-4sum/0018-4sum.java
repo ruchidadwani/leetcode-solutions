@@ -1,3 +1,39 @@
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+
+        int n = nums.length;
+
+        for(int i=0; i<n-3; i++) {
+            if(i>0 && nums[i] ==nums [i-1]) continue;
+            for(int j=i+1; j<n-2; j++) {
+                if(j>i+1 && nums[j] == nums[j-1]) continue;
+                int k = j+1;
+                int l = n-1;
+                while(k<l) {
+                    long sum = (long) nums[i] + nums[j] + nums[k] + nums[l];
+                    if(sum < target) k++;
+                    else if(sum > target) l--;
+                    else {
+                        List<Integer> ls = new ArrayList<>();
+                        ls.add(nums[i]);
+                        ls.add(nums[j]);
+                        ls.add(nums[k]);
+                        ls.add(nums[l]);
+                        ans.add(ls);
+                        k++; l--;
+                        while(k<l && nums[k] == nums[k-1]) k++;
+                        while(k<l && nums[l] == nums[l+1]) l--;
+                    }
+                }
+            }
+
+        }
+        return ans;
+    }
+}
+/*
 //Better  TC-> O(n^3)*O(no. of elements in set)  SC-> O(n)(for internal hashset) + O(quads)*2
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
@@ -31,7 +67,7 @@ class Solution {
         return ans;
     }
 }
-/*
+
 //Brute Force TC-> O(n^4) SC-> O(no. of quads)*2
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
