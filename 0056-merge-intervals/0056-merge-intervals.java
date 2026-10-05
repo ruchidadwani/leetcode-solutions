@@ -10,7 +10,7 @@ class Solution {
             int start = intervals[i][0];
             int end = intervals[i][1];
 
-            if(!ans.isEmpty() && end <= ans.get(ans.size() - 1)[1]) {
+            if(!ans.isEmpty() && start <= ans.get(ans.size() - 1)[1]) {
                 continue;
             }
             for(int j=i+1; j<n; j++) {
