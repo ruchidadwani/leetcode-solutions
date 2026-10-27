@@ -1,6 +1,7 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
         int first = findFirst(nums, target, 0, nums.length-1);
+        if(first == -1) return new int[]{-1,-1};
         int last = findLast(nums, target, 0, nums.length-1);
         return new int[]{first, last};
     }
